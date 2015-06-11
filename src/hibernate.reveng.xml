@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="viajaclub" match-name="cidade"/>
+  <table-filter match-catalog="viajaclub" match-name="cliente"/>
+  <table-filter match-catalog="viajaclub" match-name="comentario"/>
+  <table-filter match-catalog="viajaclub" match-name="contato"/>
+  <table-filter match-catalog="viajaclub" match-name="desconto"/>
+  <table-filter match-catalog="viajaclub" match-name="endereco"/>
+  <table-filter match-catalog="viajaclub" match-name="estado"/>
+  <table-filter match-catalog="viajaclub" match-name="pais"/>
+  <table-filter match-catalog="viajaclub" match-name="parceiro"/>
+  <table-filter match-catalog="viajaclub" match-name="perfil"/>
+  <table-filter match-catalog="viajaclub" match-name="rating"/>
+  <table-filter match-catalog="viajaclub" match-name="tipo_contato"/>
+  <table-filter match-catalog="viajaclub" match-name="tipo_parceiro"/>
+  <table-filter match-catalog="viajaclub" match-name="usuario"/>
+  <table-filter match-catalog="viajaclub" match-name="vigencia"/>
+</hibernate-reverse-engineering>
