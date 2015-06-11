@@ -1,0 +1,113 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context-3.0.xsd
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+	
+	<mvc:annotation-driven />
+    <context:component-scan base-package="br.com.viajaclub.entity.mysql"/>
+    <!--  
+	Tag responsável por procurar classes/beans que representam controllers do Spring
+	 -->
+	<context:component-scan base-package="br.com.viajaclub.controller" annotation-config="true">
+		<context:include-filter  type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+			
+	<!--  
+	Servlet exclusivo do Spring MVC para prover recursos do projeto. Em geral é utilizado 
+	para prover arquivos estáticos como Javascritp, CSS, Imagens, ...
+	 -->
+	<mvc:resources mapping="/assets/**" location="/assets/" order="0"/>
+
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	  <property name="definitions">
+	    <list>
+	      <value>/layouts/tiles.xml</value>
+	    </list>
+	  </property>
+	</bean>
+	<!-- (PDSI - COMENTÁRIO) 
+	View Resolver da aplicação. Essa classe é responsável por identificar a visão que
+	deve ser retornada para o usuário. O Spring MVC recomenda a colocação das páginas
+	dentro da pasta WEB-INF para proteger as páginas do acesso direto via URLs 
+	digitadas manualmente.  
+	 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="3" />
+	</bean>
+	
+	<!--  
+	View Resolver secundário. Esse view resolver pode ser utilizado em conjunto com a 
+	configuração do tiles.xml.  
+	 -->
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+	  <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+	  <property name="order" value="4"/> 
+	</bean>
+	
+	<!--  
+	Habilita a funcionalidade de mapeamento de uma URL para um controlador específico.
+	Neste caso, este mapeador associa possíveis URLs iniciais do site a um controlador 
+	para tratamento da página inicial.
+	 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	    <property name="order" value="1" />
+	    <property name="mappings">
+	        <value>
+	            /index=adminController
+	            /index.html=adminController
+	            /index.jsp=adminController
+	            /=adminController
+	        </value>
+	    </property>
+	</bean>
+    
+	<!--  
+	Habilita a funcionalidade de mapeamento padrão com o nome do controlador e nome da ação
+	através da url: /[resource]/[action].
+	Exemplo: Função "cria" no "BdpController" será mapeado através da url: 
+	"/bdp/cria"
+	 -->
+    <bean id="classnameControllerMappings" class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"
+          p:order="2"
+          p:interceptors-ref="localeChangeInterceptor" 
+          p:caseSensitive="true" >
+        <property name="defaultHandler">
+            <bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
+        </property>
+    </bean>
+    
+    <!-- Habilita uso de controladores através da anotação @Controller -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+       
+	<!--  Servlet padrão do framework. Ele é responsável por receber todas as requisições e repassar para o manipulador adequado. -->
+	<mvc:default-servlet-handler />	
+	
+	<!-- Define o arquivo de resource bundle do projeto. -->
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basenames="resources/mensagens" />
+    
+    <!-- Habilita uso do interceptador necessário à indentificação do locale -->
+   	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="locale" />
+    
+    <!-- Define onde é armazenado o locale do usuário. -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+    
+    <!-- É o bean responsável por configurar o MultipartResolver. Esta funcionalidade é utilizada no upload de arquivos. -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" /> 
+    
+  <!--   <mvc:interceptors>
+  	<bean class= "br.com.viajaclub.util.AutorizadorInterceptor" /> 
+  	
+	</mvc:interceptors> -->
+    
+    
+</beans>

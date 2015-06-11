@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (PDSI - COMENTÁRIO)
+O arquivo "ehcache.xml" é utilizado para configurar o cache de segundo nível do hibernate, através do provedor EhCache.
+-->
+<ehcache name="BdpEhCache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+	<!-- 
+	Esta é uma configuração do provedor para realizar o armazenamento temporário do cache em disco. 
+	Quando todos os caches forem armazenados em memória, esta configuração não é necessária.
+	-->
+	<diskStore path="java.io.tmpdir"/>
+	
+	<!-- 
+	Esta é uma configuração default para realizar todos os caches. Desta forma,
+	todos os caches mapeados que não tenham uma configuração específica neste arquivo, utilizarão 
+	a configuração default.
+	
+	Esta configuração, indica, por exemplo, que os caches não serão eternos em memória e sobreviverão 
+	por 1000 segundos no máximo ou 300 segundos em espera, além de informar que o máximo de objetos em 
+	memória será de 1000 e que não haverá gravação em disco.
+	-->
+	<defaultCache
+		maxEntriesLocalHeap="1000"
+		eternal="false"
+		timeToLiveSeconds="1000"
+		timeToIdleSeconds="300"
+		overflowToDisk="false">
+		
+	</defaultCache>
+
+</ehcache>

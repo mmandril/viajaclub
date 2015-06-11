@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<!-- 
+	A unidade de persistência é utilizada para configurar as informações referentes ao acesso a fonte de dados, 
+	incluindo informações sobre o provedor da Java Persistence API (JPA) e sobre o banco de dados. 
+	Neste item deve ser declarado o nome da unidade de persistência do projeto.
+	Para configurar o gerenciador de transação via JTA é preciso preencher o transaction-type como "JTA"
+	-->
+	 <persistence-unit name="viajaclub" transaction-type="RESOURCE_LOCAL"> 
+	
+		<non-jta-data-source>java:comp/env/DSvclub</non-jta-data-source>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.archive.autodetection" value="class, hbm" />
+			<property name="hibernate.cache.use_second_level_cache" value="true" />
+			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+			<property name="hibernate.cache.use_query_cache" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
